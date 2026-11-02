@@ -1,0 +1,64 @@
+# =============================================================================
+# Git Ignore - KolegaOPS (PHP Native POS Warkop)
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# 1. Environment & Kredensial Sensitif
+# -----------------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+
+# -----------------------------------------------------------------------------
+# 2. Dependensi (Composer & NPM jika digunakan di masa depan)
+# -----------------------------------------------------------------------------
+/vendor/
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# -----------------------------------------------------------------------------
+# 3. Log, Sesi, & Cache Sementara
+# -----------------------------------------------------------------------------
+*.log
+error_log
+logs/
+temp/
+tmp/
+cache/
+
+# -----------------------------------------------------------------------------
+# 4. Berkas Unggahan Pengguna (Gambar Menu / Bukti Pengeluaran)
+# -----------------------------------------------------------------------------
+# Mengabaikan berkas yang diunggah dinamis, kecuali file penanda .gitkeep
+assets/img/uploads/*
+!assets/img/uploads/.gitkeep
+assets/uploads/*
+!assets/uploads/.gitkeep
+uploads/*
+!uploads/.gitkeep
+
+# -----------------------------------------------------------------------------
+# 5. Editor & IDE
+# -----------------------------------------------------------------------------
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+*~
+
+# -----------------------------------------------------------------------------
+# 6. Sistem Operasi & Server Lokal (Windows, macOS, Laragon)
+# -----------------------------------------------------------------------------
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+.AppleDouble
+.LSOverride
+.laragon/
