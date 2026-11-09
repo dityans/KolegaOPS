@@ -145,7 +145,7 @@
         <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
           <div class="px-6 py-4 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
             <h3 class="font-bold text-slate-900 text-base">Transaksi terbaru saya</h3>
-            <a href="index.php?controller=shift&action=laporan" class="text-xs font-bold text-brand-navy hover:underline">Semua &rarr;</a>
+            <a href="index.php?controller=laporan&action=laporanPegawai" class="text-xs font-bold text-brand-navy hover:underline">Semua &rarr;</a>
           </div>
           <table class="w-full text-left text-sm">
             <thead class="bg-brand-darkNavy text-white text-xs uppercase tracking-wider">
