@@ -116,10 +116,10 @@ class AuthController
         $roleClean = strtolower(trim((string) $role));
 
         if ($roleClean === 'owner' || $roleClean === 'admin') {
-            header('Location: index.php?controller=laporan&action=dashboard');
+            header('Location: index.php?controller=dashboard&action=dashboard_owner');
         } else {
             // Role kasir diarahkan langsung ke halaman operasional POS
-            header('Location: index.php?controller=kasir&action=pos');
+            header('Location: index.php?controller=dashboard&action=dashboard_pegawai');
         }
         exit;
     }

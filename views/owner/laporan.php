@@ -51,7 +51,7 @@
       
       <!-- Kartu 1: Total Transaksi -->
       <div class="bg-brand-navy text-white p-6 rounded-2xl shadow-sm flex flex-col justify-between">
-        <p class="text-xs font-bold text-blue-200 uppercase tracking-wider">TOTAL TRANSAKSI (SEHARI PENUH)</p>
+        <p class="text-xs font-bold text-blue-200 uppercase tracking-wider">TOTAL TRANSAKSI</p>
         <div class="my-2">
           <h3 class="text-4xl font-extrabold"><?= (int) $jumlahTrxFilter ?> <span class="text-lg font-normal">Struk</span></h3>
         </div>
@@ -87,7 +87,7 @@
     <!-- Filter Bar Form -->
     <form method="GET" action="index.php" class="grid grid-cols-1 md:grid-cols-12 gap-4 mb-6">
       <input type="hidden" name="controller" value="laporan">
-      <input type="hidden" name="action" value="laporan">
+      <input type="hidden" name="action" value="laporanOwner">
 
       <div class="md:col-span-4 relative">
         <input type="text" id="searchTrx" placeholder="Cari nomor transaksi..." 
@@ -115,7 +115,9 @@
       <div class="md:col-span-2 text-right">
         <button type="button" onclick="cetakLaporanExcel()" 
                 class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3.5 px-4 rounded-xl font-bold text-sm shadow transition cursor-pointer flex items-center justify-center space-x-2">
-          <span>🖨️</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-printer preview-icon">
+            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6"/><rect x="6" y="14" width="12" height="8" rx="1"/>
+          </svg>
           <span>Cetak Laporan</span>
         </button>
       </div>
@@ -127,7 +129,7 @@
       <!-- Tabel Kiri: Rekapitulasi Pembayaran Masuk -->
       <div class="lg:col-span-7 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
         <div class="px-6 py-4 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
-          <h3 class="font-bold text-slate-900 text-base">Rekapitulasi Sehari Penuh</h3>
+          <h3 class="font-bold text-slate-900 text-base">Rekapitulasi Penjualan</h3>
           <span class="text-xs text-slate-500 font-semibold">Filter Shift: <?= htmlspecialchars($filterShift) ?></span>
         </div>
         <table class="w-full text-left text-sm">

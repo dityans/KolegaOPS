@@ -35,13 +35,13 @@
   <!-- Area Konten Utama -->
   <main class="flex-1 p-8 overflow-y-auto min-h-screen">
 
-    <!-- Header Halaman & Tombol Update Stok -->
+    <!-- Header Halaman & Tombol Tambah Stok -->
     <header class="flex items-center justify-between pb-6 border-b border-slate-200 mb-6 bg-white px-8 py-6 rounded-2xl shadow-sm">
       <div>
         <h2 class="text-3xl font-extrabold text-slate-900">Stok Bahan Baku</h2>
         <p class="text-sm text-slate-500 mt-1">Kondisi persediaan seluruh warkop &bull; <?= htmlspecialchars($tanggal_hari_ini) ?></p>
       </div>
-      <a href="index.php?controller=stokBahan&action=tambah" 
+      <a href="index.php?controller=stok_bahan&action=tambah" 
          class="bg-brand-navy hover:bg-brand-lightNavy text-white px-6 py-3.5 rounded-xl font-bold text-base shadow transition flex items-center space-x-2 no-underline cursor-pointer">
         <span>+ Tambah Bahan Baru</span>
       </a>

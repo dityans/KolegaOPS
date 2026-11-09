@@ -21,7 +21,7 @@ class StokBahanController
     public function index(): void
     {
         // 1. Pengaman Hak Akses: Khusus Owner / Admin
-        require_role(['owner', 'admin']);
+        require_role(['owner', 'admin', 'kasir', 'pegawai']);
 
         // 2. Ambil seluruh data stok riil dari database
         $daftarStok = $this->stokBahanModel->getAllStok();
@@ -46,7 +46,11 @@ class StokBahanController
         $pesanError  = get_flash('error');
 
         // 4. Muat tampilan View
-        require_once BASE_PATH . '/views/owner/stok.php';
+        if (in_array(current_user('role'), ['owner', 'admin'])) {
+            require_once BASE_PATH . '/views/owner/stok.php';
+        } else {
+            require_once BASE_PATH . '/views/pegawai/stok.php';
+        }
     }
 
     /**
@@ -118,7 +122,7 @@ class StokBahanController
     public function update($id = null): void
     {
         // 1. Pengaman Hak Akses
-        require_role(['owner', 'admin']);
+        require_role(['owner', 'admin', 'kasir', 'pegawai']);
 
         // 2. Tangani Aksi POST (Simpan Perubahan Stok)
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {

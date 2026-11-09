@@ -239,11 +239,44 @@ class MenuModel
     public function getAll(): array
     {
         $sql = "
-            SELECT * 
+            SELECT 
+                id_menu AS id,
+                nama_menu AS nama,
+                kategori,
+                harga,
+                hpp,
+                stok_menu AS stok,
+                status,
+                gambar
             FROM menu 
             WHERE LOWER(status) IN ('aktif', 'tersedia')
-            ORDER BY kategori ASC, nama_menu ASC
+            ORDER BY 
+                CASE 
+                    WHEN kategori ILIKE '%kopi%' THEN 1
+                    WHEN kategori ILIKE '%milk%' THEN 2
+                    WHEN kategori ILIKE '%hot%' OR kategori ILIKE '%ice%' OR kategori ILIKE '%teh%' OR kategori ILIKE '%minuman%' THEN 3
+                    WHEN kategori ILIKE '%snack%' OR kategori ILIKE '%camilan%' THEN 4
+                    WHEN kategori ILIKE '%nakam%' OR kategori ILIKE '%makanan%' THEN 5
+                    ELSE 6
+                END,
+                nama_menu ASC
         ";
         return $this->pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Mengambil daftar kategori menu aktif yang unik untuk filter tab POS Kasir
+     *
+     * @return array
+     */
+    public function getKategoriAktif(): array
+    {
+        $sql = "
+            SELECT DISTINCT kategori
+            FROM menu 
+            WHERE LOWER(status) IN ('aktif', 'tersedia')
+            ORDER BY kategori ASC
+        ";
+        return $this->pdo->query($sql)->fetchAll(PDO::FETCH_COLUMN);
     }
 }

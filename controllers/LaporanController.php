@@ -31,47 +31,9 @@ class LaporanController
     }
 
     /**
-     * Menampilkan Dashboard Utama Owner (Ringkasan Keuangan, Diagram 7 Hari, Transaksi, & Stok)
-     */
-    public function dashboard(): void
-    {
-        // 1. Pengaman Hak Akses: Khusus role 'owner' atau 'admin'
-        require_role(['owner', 'admin']);
-
-        // 2. Tarik data riil dari database PostgreSQL via Model
-        $statHariIni      = $this->transaksiModel->getStatistikHariIni();
-        $rekap7Hari       = $this->transaksiModel->getPendapatan7Hari();
-        $transaksiTerbaru = $this->transaksiModel->getTransaksiTerbaru(4);
-        $produkTerlaris   = $this->menuModel->getProdukTerlarisHariIni(3);
-        $stokKritisCount  = $this->stokBahanModel->getStokKritisCount();
-        $infoShift        = $this->shiftModel->getInfoOperasionalFooter();
-
-        // 3. Persiapkan variabel siap cetak untuk View
-        $total_penjualan           = format_rupiah($statHariIni['total_penjualan']);
-        $persen_vs_kemarin         = $statHariIni['persen_vs_kemarin'];
-        $jumlah_transaksi          = $statHariIni['jumlah_transaksi'];
-        $rata_rata_transaksi       = format_rupiah($statHariIni['rata_rata']);
-        $stok_kritis_count         = $stokKritisCount;
-        $pendapatan_mingguan       = $rekap7Hari['daftar_hari'];
-        $total_pendapatan_mingguan = format_rupiah($rekap7Hari['total_mingguan']);
-        $cash_hari_ini             = format_rupiah($statHariIni['total_cash']);
-        $qris_hari_ini             = format_rupiah($statHariIni['total_qris']);
-        $transaksi_terbaru         = $transaksiTerbaru;
-        $produk_terlaris           = $produkTerlaris;
-        $info_shift                = $infoShift;
-
-        $namaOwner        = ucfirst((string) current_user('username'));
-        $tanggal_hari_ini = format_tanggal(date('Y-m-d'));
-        $waktu_update     = date('H:i');
-
-        // 4. Render tampilan View Dashboard Owner
-        require_once BASE_PATH . '/views/owner/dashboard.php';
-    }
-
-    /**
      * Menampilkan Laporan Keseluruhan Finansial & Riwayat Transaksi Sehari Penuh Lintas Shift
      */
-    public function laporan(): void
+    public function laporanOwner(): void
     {
         // 1. Pengaman Hak Akses: Khusus role 'owner' atau 'admin'
         require_role(['owner', 'admin']);
@@ -99,6 +61,50 @@ class LaporanController
 
         // 5. Render tampilan View Laporan Keseluruhan
         require_once BASE_PATH . '/views/owner/laporan.php';
+    }
+
+    /**
+     * Menampilkan Laporan Shift Pegawai — Khusus transaksi dan pengeluaran shift aktif yang sedang dikerjakan hari ini
+     * Data terisolasi dari data riwayat shift lain atau kasir lain.
+     */
+    public function laporanPegawai(): void
+    {
+        // 1. Pengaman Hak Akses: Khusus role 'pegawai' atau 'kasir'
+        require_role(['pegawai', 'kasir']);
+
+        // 2. Ambil identitas kasir yang sedang aktif dari sesi dan tanggal operasional hari ini
+        $idUser            = (int) (current_user('id_user') ?? 0);
+        $namaKasir         = (string) (current_user('username') ?? $_SESSION['user']['username'] ?? $_SESSION['user']['nama'] ?? 'Kasir');
+        $namaKasirLabel    = ucfirst($namaKasir);
+        $filterTanggal     = date('Y-m-d');
+        $filterTanggalTeks = format_tanggal($filterTanggal);
+        $waktuUpdate       = date('H:i');
+
+        // 3. Ambil informasi sesi shift aktif kasir saat ini
+        $shiftAktif = $this->shiftModel->getShiftKasirAktif($idUser);
+        if (!$shiftAktif) {
+            $jamSekarang      = (int) date('H');
+            $namaShiftDefault = ($jamSekarang < 15) ? 'Pagi' : 'Sore';
+            $this->shiftModel->bukaShiftBaru($idUser, $namaShiftDefault);
+            $shiftAktif       = $this->shiftModel->getShiftKasirAktif($idUser);
+        }
+        $namaShiftAktif = $shiftAktif ? (string) $shiftAktif['nama_shift'] : 'Shift Berjalan';
+
+        // 4. Panggil model transaksi dan pengeluaran terisolasi shift aktif
+        $filteredTransaksi = $this->transaksiModel->getTransaksiShiftAktif($filterTanggal, $namaKasir);
+        $rekapPembayaran   = $this->transaksiModel->getRekapPembayaranShiftAktif($filterTanggal, $namaKasir);
+        $pengeluaranList   = $this->pengeluaranModel->getPengeluaranShiftAktif($filterTanggal, $namaKasir);
+        $totalPengeluaran  = $this->pengeluaranModel->getTotalPengeluaranShiftAktif($filterTanggal, $namaKasir);
+
+        // 5. Hitung rekapitulasi agregat shift
+        $totalOmzetFilter  = (float) ($rekapPembayaran['total_omzet'] ?? 0);
+        $jumlahTrxFilter   = (int)   ($rekapPembayaran['jumlah_transaksi'] ?? 0);
+        $totalCash         = (float) ($rekapPembayaran['total_cash'] ?? 0);
+        $totalQris         = (float) ($rekapPembayaran['total_qris'] ?? 0);
+        $labaBersih        = $totalOmzetFilter - $totalPengeluaran;
+
+        // 6. Render tampilan View Laporan Shift Pegawai
+        require_once BASE_PATH . '/views/pegawai/laporan_shift.php';
     }
 
     /**
@@ -142,6 +148,21 @@ class LaporanController
      */
     public function index(): void
     {
-        $this->laporan();
+        // Pastikan pengguna sudah login
+        if (!isset($_SESSION['user'])) {
+            header("Location: ../auth/login.php");
+            exit;
+        }
+
+        $role = $_SESSION['user']['role'] ?? '';
+
+        if (in_array(current_user('role'), ['owner', 'admin'])) {
+            $this->laporanOwner();
+        } elseif (in_array(current_user('role'), ['kasir', 'pegawai'])) {
+            $this->laporanPegawai();
+        } else {
+            // Jika role tidak dikenal, paksa logout atau redirect ke login
+            header("Location: index.php?controller=auth&action=login");
+        }
     }
 }

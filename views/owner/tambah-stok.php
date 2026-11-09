@@ -43,7 +43,7 @@
           Pencatatan inventaris bahan baku baru &bull; Oleh <?= htmlspecialchars($namaOwner) ?> &bull; <?= htmlspecialchars($tanggal_hari_ini) ?>
         </p>
       </div>
-      <a href="index.php?controller=stokBahan&action=index" 
+      <a href="index.php?controller=stok_bahan&action=index" 
          class="text-sm font-bold text-slate-600 hover:text-brand-navy bg-slate-100 hover:bg-slate-200 border border-slate-200 px-4 py-2.5 rounded-xl transition flex items-center space-x-1">
         <span>&larr;</span>
         <span>Kembali ke Stok</span>
@@ -67,7 +67,7 @@
           <span>Informasi Bahan / Item Baru</span>
         </h3>
         
-        <form action="index.php?controller=stokBahan&action=tambah" method="POST" class="space-y-6">
+        <form action="index.php?controller=stok_bahan&action=tambah" method="POST" class="space-y-6">
           <?= function_exists('csrf_field') ? csrf_field() : '' ?>
           
           <!-- 1. Nama Bahan -->
@@ -149,7 +149,7 @@
                     class="bg-brand-navy hover:bg-brand-lightNavy text-white px-7 py-3.5 rounded-xl font-bold text-base shadow transition cursor-pointer flex items-center space-x-2">
               <span>Simpan Bahan Baru</span>
             </button>
-            <a href="index.php?controller=stokBahan&action=index" 
+            <a href="index.php?controller=stok_bahan&action=index" 
                class="bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 px-6 py-3.5 rounded-xl font-bold text-base transition text-center inline-block">
               Batal
             </a>

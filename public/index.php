@@ -32,11 +32,11 @@ if (!isset($_GET['controller']) && !isset($_GET['action'])) {
     if (is_logged_in()) {
         $role = strtolower(current_user('role') ?? '');
         if ($role === 'kasir') {
-            $defaultController = 'kasir';
-            $defaultAction     = 'pos';
+            $defaultController = 'dashboard';
+            $defaultAction     = 'dashboard_pegawai';
         } else {
-            $defaultController = 'laporan';
-            $defaultAction     = 'dashboard';
+            $defaultController = 'dashboard';
+            $defaultAction     = 'dashboard_owner';
         }
     }
 }
