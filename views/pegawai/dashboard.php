@@ -132,7 +132,7 @@
                 <span class="bg-slate-100 text-slate-600 font-bold px-3.5 py-1.5 rounded-full text-xs">
                   Sudah ditutup &bull; Saldo Rp <?= number_format((float) ($shiftAktif['saldo_akhir'] ?? 0), 0, ',', '.') ?>
                 </span>
-                <a href="index.php?controller=shift&action=laporan" 
+                <a href="index.php?controller=laporan&action=laporanPegawai" 
                    class="rounded-xl bg-brand-navy text-white px-4 py-2.5 text-xs font-bold shadow hover:bg-brand-lightNavy transition">
                   Lihat Laporan
                 </a>
