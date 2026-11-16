@@ -33,12 +33,12 @@
   <?php include BASE_PATH . '/views/layouts/sidebar.php'; ?>
 
   <!-- Area Konten Utama -->
-  <main class="flex-1 p-8 overflow-y-auto min-h-screen">
+  <main class="flex-1 min-w-0 p-4 pt-[4.5rem] sm:p-6 sm:pt-[4.5rem] lg:p-8 overflow-y-auto min-h-screen">
     
     <!-- Header Halaman -->
-    <header class="flex items-center justify-between pb-5 border-b border-slate-200 mb-8 bg-white px-8 py-6 rounded-2xl shadow-sm">
+    <header class="flex flex-col items-start gap-3 sm:flex-row sm:items-center justify-between pb-5 border-b border-slate-200 mb-8 bg-white px-5 py-5 sm:px-8 sm:py-6 rounded-2xl shadow-sm">
       <div>
-        <h2 class="text-3xl font-extrabold text-slate-900">Update Stok</h2>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">Update Stok</h2>
         <p class="text-sm text-slate-500 mt-1">
           Bahan: <strong><?= htmlspecialchars($selectedStok['nama']) ?></strong> &bull; Dicatat oleh <?= htmlspecialchars($namaOwner) ?> &bull; <?= htmlspecialchars($tanggal_hari_ini) ?>
         </p>
@@ -59,7 +59,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
       
       <!-- Kolom Kiri: Form Input -->
-      <div class="lg:col-span-8 bg-white rounded-2xl border border-slate-200 shadow-sm p-8">
+      <div class="lg:col-span-8 bg-white rounded-2xl border border-slate-200 shadow-sm p-5 sm:p-8">
         <h3 class="font-bold text-slate-900 text-lg border-b border-slate-100 pb-4 mb-6">Catat Perubahan Stok Bahan</h3>
         
         <form action="index.php?controller=stok_bahan&action=update&id=<?= (int) $selectedStok['id'] ?>" method="POST" class="space-y-6">

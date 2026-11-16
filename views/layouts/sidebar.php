@@ -11,7 +11,73 @@ $inisialUser = strtoupper(substr($namaUser, 0, 2));
 $curController = strtolower($_GET['controller'] ?? '');
 $curAction     = strtolower($_GET['action'] ?? '');
 ?>
-<aside class="w-64 bg-brand-darkNavy text-white flex flex-col justify-between shrink-0 shadow-xl min-h-screen">
+<style>
+  /* Tabel lebar berubah menjadi kartu per baris di layar kecil (HP) */
+  .table-cards td > .cell-value { display: contents; }
+  @media (max-width: 639px) {
+    .table-cards, .table-cards tbody { display: block; width: 100%; }
+    .table-cards thead { display: none; }
+    .table-cards tbody { padding: 0.75rem; }
+    .table-cards tbody tr {
+      display: block;
+      margin-bottom: 0.75rem;
+      padding: 0.25rem 0;
+      border: 1px solid #e2e8f0;
+      border-radius: 0.75rem;
+      overflow: hidden;
+    }
+    .table-cards td {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.5rem 1rem;
+      text-align: right;
+      width: 100%;
+    }
+    .table-cards td::before {
+      content: attr(data-label);
+      flex-shrink: 0;
+      text-align: left;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #64748b;
+    }
+    .table-cards td:first-child {
+      justify-content: flex-start;
+      text-align: left;
+      font-size: 1rem;
+      border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 0.75rem;
+      margin-bottom: 0.25rem;
+    }
+    .table-cards td:first-child::before,
+    .table-cards td:not([data-label])::before { display: none; }
+    .table-cards td > .cell-value {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 0.25rem 0.75rem;
+      text-align: right;
+    }
+    .table-cards td[colspan] { justify-content: center; text-align: center; }
+  }
+</style>
+
+<!-- Top bar & backdrop (hanya tampil di layar kecil) -->
+<header class="lg:hidden fixed top-0 inset-x-0 z-20 h-14 bg-brand-darkNavy text-white flex items-center px-4 shadow-lg">
+  <button type="button" onclick="openSidebar()" aria-label="Buka menu" aria-controls="appSidebar" aria-expanded="false" id="sidebarToggle"
+          class="p-2 -ml-2 mr-2 rounded-lg text-blue-200 hover:text-white hover:bg-blue-950/60 focus:outline-none cursor-pointer">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+  </button>
+  <h1 class="text-lg font-extrabold tracking-wider">Kolega<span class="text-brand-skyBlue">Ops</span></h1>
+</header>
+<div id="sidebarBackdrop" class="fixed inset-0 z-30 bg-slate-900/50 hidden lg:hidden" onclick="closeSidebar()" aria-hidden="true"></div>
+
+<aside id="appSidebar" class="fixed inset-y-0 left-0 z-40 w-64 -translate-x-full transition-transform duration-200 lg:static lg:z-auto lg:translate-x-0 bg-brand-darkNavy text-white flex flex-col justify-between shrink-0 shadow-xl overflow-y-auto lg:min-h-screen">
   <div>
     <!-- Logo & Brand Header -->
     <div class="p-6 border-b border-blue-900/50 flex items-center space-x-3">
@@ -166,6 +232,37 @@ $curAction     = strtolower($_GET['action'] ?? '');
 </div>
 
 <script>
+  // Isi label kolom tiap sel dari judul tabel, dipakai oleh tampilan kartu di HP
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('table.table-cards').forEach(function (table) {
+      var heads = Array.from(table.querySelectorAll('thead th')).map(function (th) { return th.textContent.trim(); });
+      table.querySelectorAll('tbody tr').forEach(function (tr) {
+        Array.from(tr.children).forEach(function (td, i) {
+          if (td.hasAttribute('colspan') || !heads[i]) return;
+          td.setAttribute('data-label', heads[i]);
+          if (i === 0) return;
+          // Bungkus isi sel agar tetap satu blok di sisi kanan kartu
+          var wrap = document.createElement('div');
+          wrap.className = 'cell-value';
+          while (td.firstChild) wrap.appendChild(td.firstChild);
+          td.appendChild(wrap);
+        });
+      });
+    });
+  });
+
+  function openSidebar() {
+    document.getElementById('appSidebar').classList.remove('-translate-x-full');
+    document.getElementById('sidebarBackdrop').classList.remove('hidden');
+    document.getElementById('sidebarToggle').setAttribute('aria-expanded', 'true');
+  }
+
+  function closeSidebar() {
+    document.getElementById('appSidebar').classList.add('-translate-x-full');
+    document.getElementById('sidebarBackdrop').classList.add('hidden');
+    document.getElementById('sidebarToggle').setAttribute('aria-expanded', 'false');
+  }
+
   function openLogoutModal() {
     const modal = document.getElementById('logoutModal');
     const card  = document.getElementById('logoutModalCard');
@@ -194,6 +291,7 @@ $curAction     = strtolower($_GET['action'] ?? '');
   document.addEventListener('keydown', function(event) {
     if (event.key === 'Escape') {
       closeLogoutModal();
+      closeSidebar();
     }
   });
 </script>

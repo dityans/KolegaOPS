@@ -33,10 +33,10 @@
   <?php include BASE_PATH . '/views/layouts/sidebar.php'; ?>
 
   <!-- Area Konten Utama -->
-  <main class="flex-1 p-8 overflow-y-auto min-h-screen">
+  <main class="flex-1 min-w-0 p-4 pt-[4.5rem] sm:p-6 sm:pt-[4.5rem] lg:p-8 overflow-y-auto min-h-screen">
 
     <!-- Header Halaman -->
-    <header class="flex items-center justify-between pb-5 border-b border-slate-200 mb-6 bg-white px-8 py-5 rounded-2xl shadow-sm">
+    <header class="flex flex-col items-start gap-3 sm:flex-row sm:items-center justify-between pb-5 border-b border-slate-200 mb-6 bg-white px-5 py-5 sm:px-8 sm:py-5 rounded-2xl shadow-sm">
       <div>
         <h2 class="text-2xl font-extrabold text-slate-900">Dashboard</h2>
         <p class="text-xs text-slate-500 mt-1">Ringkasan hari ini &bull; <?= htmlspecialchars($tanggal_hari_ini) ?></p>
@@ -112,7 +112,7 @@
           </div>
 
           <!-- Komposisi Cash dan QRIS Hari Ini -->
-          <div class="bg-brand-darkNavy text-white px-8 py-5 mt-4 grid grid-cols-2 divide-x divide-blue-900/60 w-full">
+          <div class="bg-brand-darkNavy text-white px-5 sm:px-8 py-5 mt-4 grid grid-cols-2 divide-x divide-blue-900/60 w-full">
             <div class="pr-6">
               <p class="text-[11px] font-bold text-blue-300 uppercase tracking-wider">CASH HARI INI</p>
               <h4 class="text-xl font-extrabold mt-1"><?= htmlspecialchars($cash_hari_ini) ?></h4>
