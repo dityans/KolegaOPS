@@ -86,7 +86,7 @@
       <div class="bg-gradient-to-br from-amber-50 to-orange-50 p-6 rounded-2xl border border-orange-200 shadow-sm flex flex-col justify-between">
         <p class="text-xs font-bold text-orange-700 uppercase tracking-wider">STOK KRITIS PERHATIAN</p>
         <div class="my-2 flex items-center justify-between">
-          <h3 class="text-3xl font-extrabold text-orange-800"><?= count($stokKritis) ?> bahan</h3>
+          <h3 class="text-3xl font-extrabold text-orange-800"><?= (int) $stok_kritis_count ?> bahan</h3>
           <span class="text-2xl">⚠️</span>
         </div>
         <p class="text-xs text-orange-600 font-medium">Segera koordinasikan restock bahan</p>

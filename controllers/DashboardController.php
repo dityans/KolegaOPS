@@ -97,7 +97,7 @@ class DashboardController
         $penjualanShiftSaya  = $this->transaksiModel->getPenjualanShiftKasir($idShift, $idUser);
         $rekapPembayaran     = $penjualanShiftSaya;
         $transaksiTerbaru    = $this->transaksiModel->getTransaksiTerbaruKasir($idUser, 4);
-        $stokKritis          = $this->stokBahanModel->getDaftarStokKritis();
+        $stok_kritis_count   = $this->stokBahanModel->getStokKritisCount();
         $pengeluaranShift    = ($idShift > 0) ? $this->pengeluaranModel->getPengeluaranByShift($idShift) : [];
         $totalPengeluaranShift = ($idShift > 0) ? $this->pengeluaranModel->getTotalPengeluaranByShift($idShift) : 0;
 

@@ -251,22 +251,4 @@ class StokBahanModel
         $stmt = $this->pdo->query($sql);
         return (int) $stmt->fetchColumn();
     }
-
-    /**
-     * Mengambil daftar bahan baku kritis
-     *
-     * @return array
-     */
-    public function getDaftarStokKritis(): array
-    {
-        $sql = "
-            SELECT id_bahan, nama_bahan, stok_bahan, satuan, minimum_stok, status_stok
-            FROM bahan_baku
-            WHERE stok_bahan < minimum_stok 
-               OR status_stok IN ('menipis', 'habis')
-            ORDER BY stok_bahan ASC
-        ";
-
-        return $this->pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
-    }
 }
