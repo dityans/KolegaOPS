@@ -33,12 +33,12 @@
   <?php include BASE_PATH . '/views/layouts/sidebar.php'; ?>
 
   <!-- Area Konten Utama -->
-  <main class="flex-1 p-8 overflow-y-auto min-h-screen">
+  <main class="flex-1 min-w-0 p-4 pt-[4.5rem] sm:p-6 sm:pt-[4.5rem] lg:p-8 overflow-y-auto min-h-screen">
 
     <!-- Header Halaman & Tombol Tambah Stok -->
-    <header class="flex items-center justify-between pb-6 border-b border-slate-200 mb-6 bg-white px-8 py-6 rounded-2xl shadow-sm">
+    <header class="flex flex-col items-start gap-3 sm:flex-row sm:items-center justify-between pb-6 border-b border-slate-200 mb-6 bg-white px-5 py-5 sm:px-8 sm:py-6 rounded-2xl shadow-sm">
       <div>
-        <h2 class="text-3xl font-extrabold text-slate-900">Stok Bahan Baku</h2>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">Stok Bahan Baku</h2>
         <p class="text-sm text-slate-500 mt-1">Kondisi persediaan seluruh warkop &bull; <?= htmlspecialchars($tanggal_hari_ini) ?></p>
       </div>
     </header>
@@ -124,7 +124,7 @@
       </div>
       
       <div class="overflow-x-auto">
-        <table class="w-full text-left text-sm" id="stokTable">
+        <table class="table-cards w-full text-left text-sm" id="stokTable">
           <thead class="bg-brand-darkNavy text-white">
             <tr>
               <th class="p-4 pl-6">NAMA BAHAN/MENU</th>

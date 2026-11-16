@@ -38,7 +38,7 @@ $kembalian    = (float) ($transaksi['kembalian'] ?? 0);
   <?php require_once BASE_PATH . '/views/layouts/sidebar.php'; ?>
 
   <!-- Konten Utama -->
-  <main class="flex-1 p-8 overflow-y-auto min-h-screen">
+  <main class="flex-1 min-w-0 p-4 pt-[4.5rem] sm:p-6 sm:pt-[4.5rem] lg:p-8 overflow-y-auto min-h-screen">
     
     <!-- Header Atas Layar Pembayaran -->
     <header class="bg-white border border-slate-200 px-6 py-4 rounded-xl flex justify-between items-center shadow-sm mb-6">

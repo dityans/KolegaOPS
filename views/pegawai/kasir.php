@@ -27,16 +27,16 @@
     }
   </script>
 </head>
-<body class="bg-brand-bgLight text-slate-800 min-h-screen flex overflow-hidden text-sm">
+<body class="bg-brand-bgLight text-slate-800 min-h-screen flex lg:overflow-hidden text-sm">
 
   <!-- Sidebar Navigasi Dinamis KolegaOps -->
   <?php require_once BASE_PATH . '/views/layouts/sidebar.php'; ?>
 
   <!-- Area Konten Utama Kasir -->
-  <main class="flex-1 p-6 overflow-y-auto min-h-screen flex flex-col">
+  <main class="flex-1 min-w-0 p-4 pt-[4.5rem] sm:p-6 sm:pt-[4.5rem] lg:p-6 overflow-y-auto min-h-screen flex flex-col">
     
     <!-- Header Shift Kasir -->
-    <div class="bg-white px-6 py-4 rounded-xl shadow-sm border border-slate-200 mb-6 flex justify-between items-center text-sm">
+    <div class="bg-white px-6 py-4 rounded-xl shadow-sm border border-slate-200 mb-4 lg:mb-6 flex flex-wrap gap-2 justify-between items-center text-sm">
       <div class="font-medium">
         <span class="font-bold text-slate-900"><?= htmlspecialchars($namaKasirLabel ?? 'Kasir') ?> Shift <?= htmlspecialchars($namaShift ?? 'Aktif') ?></span> &bull; <?= htmlspecialchars($tanggalTeks ?? date('d M Y')) ?>
       </div>
@@ -61,10 +61,10 @@
     <?php endif; ?>
 
     <!-- Layout 2 Kolom -->
-    <div class="grid grid-cols-12 gap-6 flex-1 h-full">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6 flex-1 lg:h-full">
       
       <!-- Kolom Kiri: Katalog & Pencarian Menu -->
-      <div class="col-span-7 space-y-4 flex flex-col h-full">
+      <div class="lg:col-span-7 space-y-4 flex flex-col lg:h-full">
         <!-- Input Pencarian Menu -->
         <div class="relative">
           <input type="text" id="searchInput" onkeyup="filterMenu()" placeholder="Cari nama menu..." 
@@ -100,13 +100,13 @@
         </div>
 
         <!-- Grid Daftar Menu -->
-        <div class="grid grid-cols-3 gap-4 overflow-y-auto max-h-[calc(100vh-250px)] pb-6 pr-1" id="menuGrid">
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 lg:overflow-y-auto lg:max-h-[calc(100vh-250px)] pb-6 pr-1" id="menuGrid">
           <!-- Rendered by JavaScript dari Data Database PostgreSQL -->
         </div>
       </div>
 
       <!-- Kolom Kanan: Keranjang & Pembayaran -->
-      <div class="col-span-5 bg-white rounded-2xl border border-slate-200 p-6 shadow-sm flex flex-col justify-between h-[calc(100vh-140px)]">
+      <div class="lg:col-span-5 bg-white rounded-2xl border border-slate-200 p-4 sm:p-6 shadow-sm flex flex-col justify-between min-h-[28rem] lg:h-[calc(100vh-140px)]">
         <div class="flex flex-col h-full overflow-hidden">
           <div class="flex justify-between items-center pb-3 border-b border-slate-200">
             <div>
@@ -121,7 +121,7 @@
             <div id="emptyCartState" class="text-center py-12 text-slate-400">
               <span class="text-4xl">🛒</span>
               <p class="text-xs font-semibold mt-2">Keranjang masih kosong</p>
-              <p class="text-[11px] text-slate-400">Pilih menu di sebelah kiri untuk menambahkan pesanan</p>
+              <p class="text-[11px] text-slate-400">Pilih menu untuk menambahkan pesanan</p>
             </div>
           </div>
         </div>
@@ -297,7 +297,7 @@
           <div id="emptyCartState" class="text-center py-12 text-slate-400">
             <span class="text-4xl">🛒</span>
             <p class="text-xs font-semibold mt-2">Keranjang masih kosong</p>
-            <p class="text-[11px] text-slate-400">Pilih menu di sebelah kiri untuk menambahkan pesanan</p>
+            <p class="text-[11px] text-slate-400">Pilih menu untuk menambahkan pesanan</p>
           </div>
         `;
         cartCount.innerText = '0 item';

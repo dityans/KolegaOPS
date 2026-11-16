@@ -33,10 +33,10 @@
   <?php include BASE_PATH . '/views/layouts/sidebar.php'; ?>
 
   <!-- Area Konten Utama -->
-  <main class="flex-1 p-8 overflow-y-auto min-h-screen">
+  <main class="flex-1 min-w-0 p-4 pt-[4.5rem] sm:p-6 sm:pt-[4.5rem] lg:p-8 overflow-y-auto min-h-screen">
     
     <!-- Header Halaman -->
-    <header class="flex items-center justify-between pb-5 border-b border-slate-200 mb-6 bg-white px-8 py-5 rounded-2xl shadow-sm">
+    <header class="flex flex-col items-start gap-3 sm:flex-row sm:items-center justify-between pb-5 border-b border-slate-200 mb-6 bg-white px-5 py-5 sm:px-8 sm:py-5 rounded-2xl shadow-sm">
       <div>
         <h2 class="text-2xl font-extrabold text-slate-900">Dashboard</h2>
         <p class="text-xs text-slate-500 mt-1">Ringkasan hari ini &bull; <?= htmlspecialchars($tanggalTeks) ?></p>
